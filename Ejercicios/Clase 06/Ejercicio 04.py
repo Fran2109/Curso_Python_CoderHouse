@@ -5,5 +5,12 @@ Ejemplo del output solicitado:
 ✓ Juan tiene 25 años, y vive en Carrera 7 - Bogotá
 '''
 
+persona = dict()
 
-nombre = input("Ingrese su nombre: ")
+persona["Nombre"] = input("Ingrese su nombre: ")
+
+persona["Edad"] = int(input("Ingrese su edad: "))
+
+persona["Direccion"] = input("Ingrese su direccion: ")
+
+print(f"{persona['Nombre']} tiene {persona['Edad']} años, y vive en {persona['Direccion']}")
