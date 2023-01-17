@@ -24,3 +24,15 @@ ordenada.sort(reverse=True)
 
 print(f"2. {ordenada}")
 
+listaPar = []
+for item in lista:
+    if(item%2 == 0):
+        listaPar.append(item)
+        
+print(f"3. {listaPar}")
+
+print(f"4. {sum(lista)}")
+
+listaPar.insert(0, sum(lista))
+
+print(f"5. {listaPar}")
