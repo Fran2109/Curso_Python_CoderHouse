@@ -1,6 +1,7 @@
 import json
 
 
+# Funcion para verificar si existe un archivo
 def existe_archivo(ruta = "DB.json"):
     try:
         with open(ruta, 'r') as file:
@@ -8,17 +9,20 @@ def existe_archivo(ruta = "DB.json"):
     except FileNotFoundError:
         return False
 
+# Funcion para leer un archivo y retornar un diccionario
 def leer_archivo(ruta = "DB.json"):
     if(existe_archivo(ruta)):
         with open(ruta, 'r') as file:
             return json.load(file)
     else:
         return {}
-    
+
+# Funcion para pasar un archivo a diccionario    
 def escribir_archivo(DB, ruta = "DB.json"):
     with open(ruta, 'w') as file:
         json.dump(DB, file, indent=4)
-        
+ 
+# Funcion para validad que el formato de una contraseña sea correcto        
 def validar_contraseña(contrasenia):
     try:
         if(len(contrasenia) < 8):
@@ -36,7 +40,8 @@ def validar_contraseña(contrasenia):
         return True, "Contraseña valida"
     except Exception as mensaje:
         return False, mensaje
-    
+
+# Funcion para registrar un usuario    
 def register(ruta = "DB.json"):
     DB = leer_archivo(ruta)
     nombre = input("Ingrese el nombre de usuario: ")
@@ -56,6 +61,7 @@ def register(ruta = "DB.json"):
             escribir_archivo(DB, ruta)
             print("Usuario registrado con exito")
 
+# Funcion para loguear un usuario
 def login(ruta = "DB.json"):
     DB = leer_archivo(ruta)
     nombre = input("Ingrese el nombre de usuario: ")
@@ -71,7 +77,8 @@ def login(ruta = "DB.json"):
                 break
         else:
             print("Logueado correctamente")
-            
+ 
+# Funcion para imprimir los usuarios registrados           
 def imprimir_usuarios(ruta = "DB.json"):
     DB = leer_archivo(ruta)
     cantidad = 0
@@ -79,6 +86,7 @@ def imprimir_usuarios(ruta = "DB.json"):
         cantidad += 1
         print(f"Usuario Nro {cantidad}: {key}")
 
+# Sistema Completo
 def main_manejo_usuarios(ruta = "DB.json"):
     
     opcion = 0
