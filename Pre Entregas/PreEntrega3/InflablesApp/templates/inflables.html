@@ -1,0 +1,11 @@
+{% extends "site.html" %}
+{% load static %}
+{% block content %}
+    <h1>Inflables</h1>
+        <form action="/inflableFormulario/" method="post">
+            {% csrf_token %}
+            <p> Curso: <input type = "text" name="curso">
+            <p> Camada: <input type = "text" name="camada">
+            <input type="submit" value="Guardar">
+        </form>
+{% endblock %}

@@ -7,8 +7,9 @@ from InflablesApp.models import Inflable
 def inicio(request):
     return render(request, 'inicio.html')
 
-def saludo(request):
-    return HttpResponse("Hola Mundo")
+def inflables(request):
+    return render(request, 'inflables.html')
+
 
 """ def probandoTemplate(self):
     nombre = "Francisco"
@@ -18,8 +19,3 @@ def saludo(request):
     documento = plantilla.render(diccionario)
     return HttpResponse(documento) """
 
-def inflable(self):
-    inflable = Inflable(nombre = "2x2", alto = 2, ancho = 2, largo = 2)
-    inflable.save()
-    documentoDeTexto = f"---> Inflable: {inflable.nombre}"
-    return HttpResponse(documentoDeTexto)

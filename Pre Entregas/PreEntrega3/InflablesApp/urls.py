@@ -5,6 +5,5 @@ app_name = "InflablesApp"
 
 urlpatterns = [
     path('', inicio, name="Inicio"),
-    path('saludo/', saludo),
-    path('inflable/', inflable),
+    path('inflables/', inflables, name="Inflables"),
 ]
