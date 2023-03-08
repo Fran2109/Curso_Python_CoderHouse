@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'InflablesApp'
 ]
 
 MIDDLEWARE = [
@@ -33,7 +34,7 @@ ROOT_URLCONF = 'PreEntrega3.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [f"{BASE_DIR}/PreEntrega3/templates"],
+        'DIRS': [f"{BASE_DIR}/InflablesApp/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
