@@ -6,8 +6,11 @@
         {% if formulario.errors %}
         <p style="color: red;">Datos Incorrectos </p>
         {% endif %}
-
+        {% if editar %}
+        <form action="" method="post">
+        {% else %}
         <form action="{% url 'InflablesApp:Inflables' %}" method="post">
+        {% endif %}
             {% csrf_token %}
             {% for field in formulario %}
                 <div class="form-group row ">
@@ -17,6 +20,7 @@
                         class = "col-sm-10"
                         name = "{{field.name}}"
                         id = "id_{{field.name}}"
+                        value = "{{field.value|default_if_none:''}}"
                     >
                     {% if field.errors %}
                         <p style="color: red;">{{ field.errors }}</p>
@@ -44,8 +48,8 @@
                             <td>{{ inflable.ancho }}</td>
                             <td>{{ inflable.largo }}</td>
                             <td>
-                                <a {% comment %} href="{% url 'InflablesApp:Inflables' %}?id={{inflable.id}}" {% endcomment %}>Editar</a>
-                                <a href="{% url 'InflablesApp:EliminarInflable' inflable.id%}">Eliminar</a>
+                                <a href="{% url 'InflablesApp:EditarInflable' inflable.id %}">Editar</a>
+                                <a href="{% url 'InflablesApp:EliminarInflable' inflable.id %}">Eliminar</a>
                             </td>
                         </tr>
                     {% endfor %}

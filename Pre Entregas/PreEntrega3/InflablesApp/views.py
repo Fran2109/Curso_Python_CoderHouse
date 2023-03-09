@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from InflablesApp.forms import (InflableFormulario, JuegoFormulario,
                                 ReservaFormulario)
 from InflablesApp.models import Inflable, Juego, Reserva
@@ -7,14 +7,14 @@ from InflablesApp.models import Inflable, Juego, Reserva
 def inicio(request):
     return render(request, 'inicio.html')
 
-def inflables(request):
+def leerInflables(request):
     if request.method == 'POST':
         formulario = InflableFormulario(request.POST)
         if formulario.is_valid():
             informacion = formulario.cleaned_data
             inflable = Inflable(nombre = informacion['nombre'], alto = informacion['alto'], ancho = informacion['ancho'], largo = informacion['largo'])
             inflable.save()
-            formulario = InflableFormulario()
+            return redirect("InflablesApp:Inflables")
     else:
         formulario = InflableFormulario()
     
@@ -25,9 +25,34 @@ def inflables(request):
 def eliminarInflable(request, inflableId):
     inflable = Inflable.objects.get(id = inflableId)
     inflable.delete()
-    inflables = Inflable.objects.all()
-    return render(request, 'inflables.html', {"formulario": InflableFormulario(), "inflables": inflables})
+    return redirect("InflablesApp:Inflables")
 
+def editarInflable(request, inflableId):
+    inflable = Inflable.objects.get(id = inflableId)
+    if request.method == 'POST':
+        formulario = InflableFormulario(request.POST)
+        if formulario.is_valid():
+            informacion = formulario.cleaned_data
+            
+            inflable.nombre =  informacion['nombre']
+            inflable.alto =  informacion['alto']
+            inflable.ancho =  informacion['ancho']
+            inflable.largo =  informacion['largo']
+            
+            inflable.save()
+            formulario = InflableFormulario()
+            return redirect("InflablesApp:Inflables")
+    else:
+        formulario = InflableFormulario(initial= {
+            'nombre': inflable.nombre,
+            'alto': inflable.alto,
+            'ancho': inflable.ancho,
+            'largo': inflable.largo,
+        })
+    inflables = Inflable.objects.all()
+    return render(request, 'inflables.html', {"formulario": formulario, "inflables": inflables, "editar": True})
+
+    
 def busqueda(request):
     if request.method == 'GET' and 'nombre' in request.GET.keys():
         nombre = request.GET['nombre']
@@ -59,7 +84,7 @@ def juegos(request):
             informacion = formulario.cleaned_data
             juego = Juego(nombre = informacion['nombre'], cant_personas = informacion['cant_personas'], ancho = informacion['ancho'], largo = informacion['largo'])
             juego.save()
-            formulario = JuegoFormulario()
+            return redirect("InflablesApp:Juegos")
     else:
         formulario = JuegoFormulario()
     
@@ -74,7 +99,7 @@ def reservas(request):
             informacion = formulario.cleaned_data
             reserva = Reserva(fecha = informacion['fecha'], hora_inicio = informacion['hora_inicio'], hora_fin = informacion['hora_fin'], nombre_cliente = informacion['nombre_cliente'], elemento = informacion['elemento'], direccion = informacion['direccion'])
             reserva.save()
-            formulario = ReservaFormulario()
+            return redirect("InflablesApp:Reservas")
     else:
         formulario = ReservaFormulario()
     
