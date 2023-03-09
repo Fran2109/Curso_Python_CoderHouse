@@ -8,5 +8,6 @@ urlpatterns = [
     path('inflables/', inflables, name="Inflables"),
     path('eliminarInflable/<inflableId>/', eliminarInflable, name="EliminarInflable"),
     path('juegos/', juegos, name="Juegos"),
-    path('busqueda/', busqueda, name="Busqueda")
+    path('busqueda/', busqueda, name="Busqueda"),
+    path('reservas/', reservas, name="Reservas"),
 ]

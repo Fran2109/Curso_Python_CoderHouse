@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from InflablesApp.forms import InflableFormulario, JuegoFormulario
-from InflablesApp.models import Inflable, Juego
+from InflablesApp.forms import (InflableFormulario, JuegoFormulario,
+                                ReservaFormulario)
+from InflablesApp.models import Inflable, Juego, Reserva
 
 
 def inicio(request):
@@ -65,3 +66,18 @@ def juegos(request):
     juegos = Juego.objects.all()
     
     return render(request, 'juegos.html', {"formulario": formulario, "juegos": juegos})
+
+def reservas(request):
+    if request.method == 'POST':
+        formulario = ReservaFormulario(request.POST)
+        if formulario.is_valid():
+            informacion = formulario.cleaned_data
+            reserva = Reserva(fecha = informacion['fecha'], hora_inicio = informacion['hora_inicio'], hora_fin = informacion['hora_fin'], nombre_cliente = informacion['nombre_cliente'], elemento = informacion['elemento'], direccion = informacion['direccion'])
+            reserva.save()
+            formulario = ReservaFormulario()
+    else:
+        formulario = ReservaFormulario()
+    
+    reservas = Reserva.objects.all()
+    
+    return render(request, 'reservas.html', {"formulario": formulario, "reservas": reservas})
