@@ -1,0 +1,50 @@
+{% extends "site.html" %}
+{% load static %}
+{% block content %}
+    <h1>Buscar</h1>
+
+    <form action="{% url 'InflablesApp:Busqueda' %}" method="GET">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="nombre" class="col-sm-2">Nombre</label>
+            <input 
+                type = "text"
+                class = "col-sm-10"
+                name = "nombre"
+                id = "nombre"
+            >
+        </div>
+        
+        <div class="custom-control custom-radio">
+            <input type="radio" id="inflables" name="customRadio" class="custom-control-input" value="inflable" checked>
+            <label class="custom-control-label" for="inflables">Inflables</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="juegos" name="customRadio" class="custom-control-input" value="juego">
+            <label class="custom-control-label" for="juegos">Juegos</label>
+        </div>
+          
+
+        <input type="submit" value="Buscar">
+    </form>
+        <h4>
+            {{ mensaje }}
+        </h4>
+        {% if elementos %}
+            <h2>Resultados</h2>
+            <table class="table table-bordered table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for elemento in elementos %}
+                        <tr>
+                            <td>{{ elemento.nombre }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+{% endblock %}

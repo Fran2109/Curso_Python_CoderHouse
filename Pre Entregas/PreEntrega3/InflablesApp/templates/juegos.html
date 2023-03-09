@@ -1,13 +1,13 @@
 {% extends "site.html" %}
 {% load static %}
 {% block content %}
-    <h1>Inflables</h1>
+    <h1>Juegos</h1>
 
         {% if formulario.errors %}
         <p style="color: red;">Datos Incorrectos </p>
         {% endif %}
 
-        <form action="{% url 'InflablesApp:Inflables' %}" method="post">
+        <form action="{% url 'InflablesApp:Juegos' %}" method="post">
             {% csrf_token %}
             {% for field in formulario %}
                 <div class="form-group row ">
@@ -25,7 +25,7 @@
             {% endfor %}
             <input type="submit" value="Guardar">
         </form>
-        {% if inflables %}
+        {% if juegos %}
             <table class="table table-bordered table-dark">
                 <thead>
                     <tr>
@@ -33,25 +33,20 @@
                         <th scope="col">Alto</th>
                         <th scope="col">Ancho</th>
                         <th scope="col">Largo</th>
-                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for inflable in inflables %}
+                    {% for juego in juegos %}
                         <tr>
-                            <td>{{ inflable.nombre }}</td>
-                            <td>{{ inflable.alto }}</td>
-                            <td>{{ inflable.ancho }}</td>
-                            <td>{{ inflable.largo }}</td>
-                            <td>
-                                <a {% comment %} href="{% url 'InflablesApp:Inflables' %}?id={{inflable.id}}" {% endcomment %}>Editar</a>
-                                <a href="{% url 'InflablesApp:EliminarInflable' inflable.id%}">Eliminar</a>
-                            </td>
+                            <td>{{ juego.nombre }}</td>
+                            <td>{{ juego.cant_personas }}</td>
+                            <td>{{ juego.ancho }}</td>
+                            <td>{{ juego.largo }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         {% else %}
-            <p style="color: red;">No hay inflables para mostrar </p>
+            <p style="color: red;">No hay juegos para mostrar </p>
         {% endif %}
 {% endblock %}
