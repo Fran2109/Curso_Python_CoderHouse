@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import Context, Template, loader
+from InflablesApp.forms import InflableFormulario
 from InflablesApp.models import Inflable
 
 
@@ -8,14 +7,23 @@ def inicio(request):
     return render(request, 'inicio.html')
 
 def inflables(request):
-    return render(request, 'inflables.html')
+    if request.method == 'POST':
+        formulario = InflableFormulario(request.POST)
+        if formulario.is_valid():
+            informacion = formulario.cleaned_data
+            inflable = Inflable(nombre = informacion['nombre'], alto = informacion['alto'], ancho = informacion['ancho'], largo = informacion['largo'])
+            inflable.save()
+            formulario = InflableFormulario()
+    else:
+        formulario = InflableFormulario()
+    
+    inflables = Inflable.objects.all()
+    
+    return render(request, 'inflables.html', {"formulario": formulario, "inflables": inflables})
 
-
-""" def probandoTemplate(self):
-    nombre = "Francisco"
-    apellido = "Filosi"
-    diccionario = {"nombre": nombre, "apellido": apellido}
-    plantilla = loader.get_template("template1.html")
-    documento = plantilla.render(diccionario)
-    return HttpResponse(documento) """
+def eliminarInflable(request, inflableId):
+    inflable = Inflable.objects.get(id = inflableId)
+    inflable.delete()
+    inflables = Inflable.objects.all()
+    return render(request, 'inflables.html', {"formulario": InflableFormulario(), "inflables": inflables})
 

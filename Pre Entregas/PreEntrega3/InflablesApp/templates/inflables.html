@@ -2,10 +2,52 @@
 {% load static %}
 {% block content %}
     <h1>Inflables</h1>
-        <form action="/inflableFormulario/" method="post">
+
+        {% if formulario.errors %}
+        <p style="color: red;">Datos Incorrectos </p>
+        {% endif %}
+
+        <form action="{% url 'InflablesApp:Inflables' %}" method="post">
             {% csrf_token %}
-            <p> Curso: <input type = "text" name="curso">
-            <p> Camada: <input type = "text" name="camada">
+            {% for field in formulario %}
+                <div class="form-group row ">
+                    <label for="{{field.label}}" class="col-sm-2">{{field.label}}</label>
+                    <input 
+                        type = "{{field.field.widget.input_type}}"
+                        class = "{% comment %} form-control {% endcomment %} col-sm-10"
+                        name = "{{field.name}}"
+                        id = "id_{{field.name}}"
+                    >
+                    {% if field.errors %}
+                        <p style="color: red;">{{ field.errors }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
             <input type="submit" value="Guardar">
         </form>
+        <table class="table table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Alto</th>
+                    <th scope="col">Ancho</th>
+                    <th scope="col">Largo</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inflable in inflables %}
+                    <tr>
+                        <td>{{ inflable.nombre }}</td>
+                        <td>{{ inflable.alto }}</td>
+                        <td>{{ inflable.ancho }}</td>
+                        <td>{{ inflable.largo }}</td>
+                        <td>
+                            <a {% comment %} href="{% url 'InflablesApp:Inflables' %}?id={{inflable.id}}" {% endcomment %}>Editar</a>
+                            <a href="{% url 'InflablesApp:EliminarInflable' inflable.id%}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 {% endblock %}
