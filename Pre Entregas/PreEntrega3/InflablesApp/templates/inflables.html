@@ -6,11 +6,7 @@
         {% if formulario.errors %}
         <p style="color: red;">Datos Incorrectos </p>
         {% endif %}
-        {% if editar %}
         <form action="" method="post">
-        {% else %}
-        <form action="{% url 'InflablesApp:Inflables' %}" method="post">
-        {% endif %}
             {% csrf_token %}
             {% for field in formulario %}
                 <div class="form-group row ">
