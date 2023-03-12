@@ -4,9 +4,11 @@ from InflablesApp.forms import (InflableFormulario, JuegoFormulario,
 from InflablesApp.models import Inflable, Juego, Reserva
 
 
+# Vista del inicio del sitio
 def inicio(request):
     return render(request, 'inicio.html')
 
+# Vista para leer los inflables
 def leerInflables(request):
     if request.method == 'POST':
         formulario = InflableFormulario(request.POST)
@@ -22,11 +24,13 @@ def leerInflables(request):
     
     return render(request, 'inflables.html', {"formulario": formulario, "inflables": inflables})
 
+# Vista para eliminar un inflable
 def eliminarInflable(request, inflableId):
     inflable = Inflable.objects.get(id = inflableId)
     inflable.delete()
     return redirect("InflablesApp:Inflables")
 
+# Vista para editar un inlfable
 def editarInflable(request, inflableId):
     inflable = Inflable.objects.get(id = inflableId)
     if request.method == 'POST':
@@ -52,7 +56,7 @@ def editarInflable(request, inflableId):
     inflables = Inflable.objects.all()
     return render(request, 'inflables.html', {"formulario": formulario, "inflables": inflables, "editar": True})
 
-    
+# Vista para buscar un inflable o un juego 
 def busqueda(request):
     if request.method == 'GET' and 'nombre' in request.GET.keys():
         nombre = request.GET['nombre']
@@ -77,6 +81,7 @@ def busqueda(request):
         elementos = []    
     return render(request, 'busqueda.html', {"elementos": elementos, "mensaje": mensaje})
 
+# Vista para leer y subir los juegos
 def juegos(request):
     if request.method == 'POST':
         formulario = JuegoFormulario(request.POST)
@@ -92,6 +97,7 @@ def juegos(request):
     
     return render(request, 'juegos.html', {"formulario": formulario, "juegos": juegos})
 
+# Vista para leer y subir las reservas
 def reservas(request):
     if request.method == 'POST':
         formulario = ReservaFormulario(request.POST)

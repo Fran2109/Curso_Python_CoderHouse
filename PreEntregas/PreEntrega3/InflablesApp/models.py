@@ -1,18 +1,21 @@
 from django.db import models
 
 
+# Modelo para los inflables
 class Inflable(models.Model):
     nombre = models.CharField(max_length=50)
     alto = models.FloatField()
     ancho = models.FloatField()
     largo = models.FloatField()
 
+# Modelo para los juegos
 class Juego(models.Model):
     nombre = models.CharField(max_length=50)
     cant_personas = models.PositiveIntegerField()
     ancho = models.FloatField()
     largo = models.FloatField()
     
+# Modelo para las reservas
 class Reserva(models.Model):
     fecha = models.DateField()
     hora_inicio = models.TimeField()
