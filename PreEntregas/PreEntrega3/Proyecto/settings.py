@@ -29,7 +29,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'PreEntrega3.urls'
+ROOT_URLCONF = 'Proyecto.urls'
 
 TEMPLATES = [
     {
@@ -47,7 +47,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'PreEntrega3.wsgi.application'
+WSGI_APPLICATION = 'Proyecto.wsgi.application'
 
 DATABASES = {
     'default': {
