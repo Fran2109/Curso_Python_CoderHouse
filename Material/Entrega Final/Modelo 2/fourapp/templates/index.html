@@ -1,0 +1,37 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block content %}
+    <br>
+    <div class="center-screen">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="13%" height="13%">
+    </div>
+    <br>
+
+    <div class="newPostForm center-screen">
+        <form action="{% url 'fourapp:new_post' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p}}
+            <input type="submit" value="New Post">
+        </form>
+    </div>
+
+    <div>
+        <h3 class="boardsTitle center-screen">Boards</h3>
+        <table class="listCategories center-screen">
+            {% if categories %}
+                {% for category in categories %}
+                <tr>
+                    <td class="listCategoriesFullNameTD"><a href="/{{category.short}}">{{ category.name }}</a></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <p>No categories are available.</p>
+            {% endif %}
+        </table>
+    </div>
+    
+
+</body>
+</html>
+{% endblock %}

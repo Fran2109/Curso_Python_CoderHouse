@@ -1,0 +1,90 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block content %}
+    <div class="center-screen">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="13%" height="13%">
+    </div>
+    <div class="center-screen">
+        <h1 class="categoryTitle">{{ category.short }} - {{ category.name }}</h1>
+    </div>
+
+    <div class="postContainer">
+        <table class="postTable">
+            <tr>
+                <td class="postTableTitle">
+                    <h2>{{ post.title }}</h2>
+                </td>
+                {% if editable %}
+                <tr>
+                    <td class="postTableEdit">
+                    <a href="/edit/{{ post.post_id }}">Edit</a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% if deletable %}
+                <tr>
+                    <td class="postTableDelete">
+                    <a href="/delete/{{ post.post_id }}">Delete</a>
+                    </td>
+                </tr>
+                {% endif %}
+            </tr>
+            <tr>
+                <td class="postTableDetails"><p><small>#{{ post.post_id }}</small></p></td>
+                <td class="postTableDetails"><p><small>{{ post.post_date }}</small></p></td>
+                <td class="postTableDetails"><p><small>{{ post.viewcounter }} Views</small></p></td>
+                <td class="postTableDetails"><p><small>{{ replycounter }} Replies</small></p></td>
+            </tr>
+            {% if post.edited %}
+            <tr>
+                <td class="postTableDetails"><p><small>Edited</small></p></td>
+            {% endif %}
+            <tr>
+                <td class="postTableUser"><h4>{{ post.username }} </h4></td>
+            </tr>
+            <tr>
+                <td class="postTableContent">{{ post.content|safe }}</td>
+                {% if post.image %}
+                <td class="postTableImage"><a href="../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ post.image }}" loading="lazy"></a></td>
+                {% endif %}
+            </tr>
+        </table>
+    </div>
+
+    <div class="postReply">
+        <h3>Reply</h3>
+        <form action="/post/{{ post.post_id }}/reply" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username"></textarea><br>
+            <textarea class="textInput" name="content" rows="5" cols="40" placeholder="reply"></textarea><br>
+            <input class="form-control-file" type="file" name="image" id="image" accept="image/*">
+            <input type="submit" value="Reply">
+        </form>
+    </div>
+
+
+    <div class="replyContainer">
+        <h3>Replies</h3>
+        {% if replies %}
+        {% for reply in replies %}
+        <table class="replyTable">
+            <tr>
+                <td class="replyTableDetails"><p>{{ reply.username }}</p></td>
+                <td class="replyTableDetails"><p>{{ reply.reply_date }}</p></td>
+            </tr>
+            <tr>
+                <td class="replyTableContent"><p>{{ reply.content }}</p></td>
+                {% if reply.image %}
+                <td class="replyTableContent"><a href="../media/{{ reply.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ reply.image }}"></a></td>
+                {% endif %}
+            </tr>
+        </table>
+        {% endfor %}
+        {% else %}
+        <p><small>There are no replies to this post, yet! Write your own!</small></p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
+{% endblock %}
