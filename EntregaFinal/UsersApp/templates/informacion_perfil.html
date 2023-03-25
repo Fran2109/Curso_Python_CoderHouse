@@ -2,7 +2,7 @@
 {% block title %}Informacion de Perfil{% endblock %}
 {% block content %}
     <h1>Informacion de Perfil de {{user.username}}</h1>
-    <img src="{{ user.perfil.avatar.url }}" alt="Avatar" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+    <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
     <p><strong>Username:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
     <p><strong>Nombre:</strong> {{ user.first_name }}</p>

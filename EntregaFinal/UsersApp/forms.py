@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from UsersApp.models import Perfil
+from UsersApp.models import Profile
 
 
 class FormularioLogin(AuthenticationForm):
@@ -25,11 +25,3 @@ class FormularioRegistro(UserCreationForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'avatar']
         help_texts = {k:"" for k in fields}
-    
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if commit:
-            user.save()
-            profile = Perfil(user=user, avatar=self.cleaned_data['avatar'])
-            profile.save()
-        return user
