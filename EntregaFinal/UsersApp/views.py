@@ -1,13 +1,12 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
-from UsersApp.forms import FormularioRegistro
+from UsersApp.forms import FormularioRegistro, FormularioLogin
 
 
 # Create your views here.
 def login_request(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = FormularioLogin(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -19,7 +18,7 @@ def login_request(request):
                 return render(request, 'login.html', {"form": form})
         else:
             return render(request, 'login.html', {"form": form})
-    form = AuthenticationForm()
+    form = FormularioLogin()
     return render(request, 'login.html', {"form": form})
 
             
