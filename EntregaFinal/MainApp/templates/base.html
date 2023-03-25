@@ -26,12 +26,17 @@
 			background-color: #212529;
 		}
 
+		.list-group-item {
+			background-color: #333333;
+			color: #f2f2f2;
+		}
+
 		/* Estilos del footer */
 		.footer {
 			background-color: #343a40;
 			color: #fff;
 			padding: 20px;
-			position: fixed; /* establece el pie de página como un elemento de posición fija */
+			padding
 			bottom: 0; /* establece el pie de página en la parte inferior de la ventana */
 			width: 100%; /* establece la anchura del pie de página en el 100% del ancho de la ventana */
 		}
@@ -54,7 +59,7 @@
 	</style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-dark">
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
 		<a class="navbar-brand" href="{% url 'MainApp:Inicio' %}">Mi Blog</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -65,7 +70,7 @@
 					<a class="nav-link" href="{% url 'MainApp:Inicio' %}">Inicio</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Acerca de</a>
+					<a class="nav-link" href="{% url 'UsersApp:AcercaDeMi' %}">Acerca de Mi</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Servicios</a>
@@ -98,14 +103,14 @@
 		</div>
 	</nav>
 
-	<div class="container">
+	<div class="container" style="margin-top: 50px; margin-bottom: 50px; min-height: 100vh;">
         
         {% block content %}
                                 
 		{% endblock %}
     </div>
 
-	<footer class="footer">
+	<footer class="footer fixed-bottom bg-dark text-white">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">

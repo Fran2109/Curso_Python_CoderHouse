@@ -34,3 +34,17 @@ def registro(request):
     else:
         form = FormularioRegistro()
     return render(request, 'registro.html', {"form": form})
+
+def acercaDeMi(request):
+    context = {
+        'nombre': 'Francisco',
+        'apellido': 'Filosi',
+        'profesion': 'Desarrollador RPA',
+        'nacionalidad': 'Argentino',
+        'ciudad': 'Tortuguitas',
+        'edad': 21,
+        'email': 'franciscofilosi3@gmail.com',
+        'telefono': '11-5591-1624',
+        'descripcion': 'Soy desarrollador RPA en Automation Anywhere hace un año. Estoy apuntando a especializarme en IA y estoy estudiando Ingenieria en Informatica en la UCEMA. Actualmente estoy cursando el tercer año de la carrera.'
+    }
+    return render(request, 'acerca_de_mi.html', context)

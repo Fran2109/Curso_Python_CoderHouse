@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Acerca de Mi{% endblock %}
+{% block content %}
+    <h1 class="display-4 text-center mb-5 text-white">Acerca de mí</h1>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Nombre:</strong> {{ nombre }}</li>
+        <li class="list-group-item"><strong>Apellido:</strong> {{ apellido }}</li>
+        <li class="list-group-item"><strong>Profesión:</strong> {{ profesion }}</li>
+        <li class="list-group-item"><strong>Profesión:</strong> {{ nacionalidad }}</li>
+        <li class="list-group-item"><strong>Ciudad:</strong> {{ ciudad }}</li>
+        <li class="list-group-item"><strong>Edad:</strong> {{ edad }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ email }}</li>
+        <li class="list-group-item"><strong>Telefono:</strong> {{ telefono }}</li>
+        <li class="list-group-item"><strong>Descripción:</strong> {{ descripcion }}</li>
+    </ul>
+{% endblock %}
