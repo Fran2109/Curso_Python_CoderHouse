@@ -29,9 +29,6 @@ def registro(request):
         if form.is_valid():
             new_user = form.save()
             login(request, new_user)
-            if 'avatar' in request.FILES:
-                new_user.profile.avatar = request.FILES['avatar']
-                new_user.profile.save()
             return redirect("MainApp:Inicio")
     else:
         form = FormularioRegistro()
