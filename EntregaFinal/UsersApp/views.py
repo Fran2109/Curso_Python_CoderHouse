@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
-from UsersApp.forms import FormularioRegistro, FormularioLogin
+from UsersApp.forms import FormularioLogin, FormularioRegistro
 
 
 # Create your views here.
@@ -25,10 +25,13 @@ def login_request(request):
     
 def registro(request):
     if request.method == 'POST':
-        form = FormularioRegistro(request.POST)
+        form = FormularioRegistro(request.POST, request.FILES)
         if form.is_valid():
             new_user = form.save()
             login(request, new_user)
+            if 'avatar' in request.FILES:
+                new_user.profile.avatar = request.FILES['avatar']
+                new_user.profile.save()
             return redirect("MainApp:Inicio")
     else:
         form = FormularioRegistro()
