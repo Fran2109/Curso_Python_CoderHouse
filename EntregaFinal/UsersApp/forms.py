@@ -14,6 +14,8 @@ class FormularioLogin(AuthenticationForm):
     
 class FormularioRegistro(UserCreationForm):
     username = forms.CharField(label = "Nombre de Usuario", required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
+    first_name = forms.CharField(label = "Nombre", required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
+    last_name = forms.CharField(label = "Apellido", required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     email = forms.CharField(label="Email", required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={'class': "form-control"}))
     password2 = forms.CharField(label="Repetir la Contraseña", widget=forms.PasswordInput(attrs={'class': "form-control"}))
@@ -21,7 +23,7 @@ class FormularioRegistro(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'avatar']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'avatar']
         help_texts = {k:"" for k in fields}
     
     def save(self, commit=True):

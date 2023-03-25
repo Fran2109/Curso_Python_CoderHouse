@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from UsersApp.forms import FormularioLogin, FormularioRegistro
 
@@ -47,3 +48,7 @@ def acercaDeMi(request):
         'descripcion': 'Soy desarrollador RPA en Automation Anywhere hace un año. Estoy apuntando a especializarme en IA y estoy estudiando Ingenieria en Informatica en la UCEMA. Actualmente estoy cursando el tercer año de la carrera.'
     }
     return render(request, 'acerca_de_mi.html', context)
+
+@login_required
+def informacionPerfil(request):
+    return render(request, 'informacion_perfil.html', {})
