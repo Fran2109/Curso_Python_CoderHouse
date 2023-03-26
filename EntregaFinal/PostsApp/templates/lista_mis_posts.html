@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Mis Posts{% endblock %}
+{% block content %}
+    <h1>Posts de {{user.username}}</h1>
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-4">
+                <div class="card">
+                    {% if post.fondo %}
+                        <img class="card-img-top" src="{{ post.fondo.url }}" alt="{{ post.titulo }}">
+                    {% endif %}
+                    <div class="card-header">
+                        <h5 class="card-title">{{ post.titulo }}</h5>
+                        <p class="card-subtitle">{{ post.fecha_creacion|date }}</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ post.contenido|truncatewords:50 }}</p>
+                        <a{% comment %}  href="{% url 'view_post' post.id %}" {% endcomment %} class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
