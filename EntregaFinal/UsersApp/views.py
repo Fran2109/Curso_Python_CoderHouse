@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
-from UsersApp.forms import (FormularioEditarPerfil, FormularioLogin,
-                            FormularioRegistro, FormularioEditarContrasenia)
+from django.urls import reverse_lazy
+from UsersApp.forms import (FormularioEditarContrasenia,
+                            FormularioEditarPerfil, FormularioLogin,
+                            FormularioRegistro)
 from UsersApp.models import Profile
-from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -80,19 +82,8 @@ def editarPerfil(request):
         form = FormularioEditarPerfil(initial={'username': usuario.username, 'first_name': usuario.first_name, 'last_name': usuario.last_name,  'email': usuario.email, 'link': usuario.profile.link })
     return render(request, 'editar_perfil.html', {"form": form})
 
-def modificarContrasenia(request):
-    if request.method == "POST":
-        form = FormularioEditarContrasenia(request.POST)
-        if form.is_valid():
-            print("Valido")
-        else:
-            print("No valido")
-        """ if form.is_valid():
-            print(form.cleaned_data.get('username'))
-            print(form.cleaned_data.get('password1'))
-            usuario.set_password(form.cleaned_data.get('password1'))
-            usuario.save()
-            return redirect("MainApp:Inicio")  """
-    else:
-        form = FormularioEditarContrasenia()
-    return render(request, 'modificar_contrasenia.html', {"form": form})
+class ModificarContrasenia(PasswordChangeView):
+    form_class = FormularioEditarContrasenia
+    template_name = 'modificar_contrasenia.html'
+    success_url = reverse_lazy('MainApp:Inicio')
+    

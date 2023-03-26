@@ -8,5 +8,6 @@
     <p><strong>Nombre:</strong> {{ user.first_name }}</p>
     <p><strong>Apellido:</strong> {{ user.last_name }}</p>
     <p><strong>Link:</strong> {{ user.profile.link }}</p>
-    <a href="{% url 'UsersApp:EditarPerfil' %}" class="btn btn-primary">Editar!</a>
+    <a href="{% url 'UsersApp:EditarPerfil' %}" class="btn btn-primary" style="margin-top: 10px;">Editar!</a>
+    <a href="{% url 'UsersApp:ModificarContrasenia' %}" style="margin-top: 10px;" >Cambiar contraseña</a>
 {% endblock %}

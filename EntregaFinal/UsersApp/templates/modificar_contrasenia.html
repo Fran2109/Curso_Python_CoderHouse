@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Modificar Contraseña{% endblock %}
 {% block content %}
-<h1>Modificar Contraseña de {{user.username}}</h1>
+<h1>Modificar Contraseña</h1>
 <form action="" method="POST">
 	{% csrf_token %}
 	{{ form.as_p }}

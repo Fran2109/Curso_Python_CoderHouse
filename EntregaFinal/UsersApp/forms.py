@@ -1,7 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
+                                       UserCreationForm)
 from django.contrib.auth.models import User
-from UsersApp.models import Profile
 
 
 class FormularioLogin(AuthenticationForm):
@@ -42,12 +42,11 @@ class FormularioEditarPerfil(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'link', 'avatar']
         help_texts = {k:"" for k in fields}
         
-class FormularioEditarContrasenia(UserChangeForm):
-    username = forms.CharField(label = "Nombre de Usuario", required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
-    password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={'class': "form-control"}))
-    password2 = forms.CharField(label="Repetir la Contraseña", widget=forms.PasswordInput(attrs={'class': "form-control"}))
-    
+class FormularioEditarContrasenia(PasswordChangeForm):
+    old_password = forms.CharField(label=("Contraseña Actual"), widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    new_password1 = forms.CharField(label=("Nueva Contraseña"), widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    new_password2 = forms.CharField(label=("Repita Nueva Contraseña"), widget=forms.PasswordInput(attrs={'class':'form-control'}))
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']
+        fields = ['old_password', 'new_password1', 'new_password2']
         help_texts = {k:"" for k in fields}

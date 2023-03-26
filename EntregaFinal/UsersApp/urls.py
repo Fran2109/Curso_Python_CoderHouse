@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LogoutView
 from django.urls import path
-from UsersApp.views import (acercaDeMi, editarPerfil, informacionPerfil,
-                            login_request, registro, modificarContrasenia)
+from UsersApp.views import (ModificarContrasenia, acercaDeMi, editarPerfil,
+                            informacionPerfil, login_request, registro)
 
 app_name = 'UsersApp'
 
@@ -12,5 +12,5 @@ urlpatterns = [
     path('acercaDeMi', acercaDeMi, name = "AcercaDeMi"),
     path('informacionPerfil', informacionPerfil, name = "InformacionPerfil"),
     path('editarPerfil', editarPerfil, name = 'EditarPerfil'),
-    path('modificarContrasenia', modificarContrasenia, name = 'ModificarContrasenia'),
+    path('modificarContrasenia', ModificarContrasenia.as_view(), name = 'ModificarContrasenia'),
 ]

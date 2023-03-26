@@ -6,5 +6,4 @@
 		{% csrf_token %}
 		{{ form.as_p }}<button type="submit", class="btn btn-primary">Iniciar Sesion!</button>
 	</form>
-	<a style="margin-top: 10px;" href="{% url 'UsersApp:ModificarContrasenia' %}">Cambiar contraseña</a>
 {% endblock %}
