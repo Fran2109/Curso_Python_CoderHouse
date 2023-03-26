@@ -4,30 +4,14 @@ from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+from django.contrib.auth.views import LoginView
+
 from UsersApp.forms import (FormularioEditarContrasenia,
                             FormularioEditarPerfil, FormularioLogin,
                             FormularioRegistro)
 from UsersApp.models import Profile
 
 
-# Create your views here.
-def login_request(request):
-    if request.method == 'POST':
-        form = FormularioLogin(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect("MainApp:Inicio")
-            else:
-                return render(request, 'login.html', {"form": form})
-        else:
-            return render(request, 'login.html', {"form": form})
-    form = FormularioLogin()
-    return render(request, 'login.html', {"form": form})
-  
 def registro(request):
     if request.method == 'POST':
         form = FormularioRegistro(request.POST, request.FILES)
@@ -71,3 +55,12 @@ class ModificarContrasenia(PasswordChangeView):
     template_name = 'modificar_contrasenia.html'
     success_url = reverse_lazy('MainApp:Inicio')
     
+class LoginPagina(LoginView):
+    form_class = FormularioLogin
+    template_name = 'login.html'
+    fields = '__all__'
+    redirect_autheticated_user = True
+    success_url = reverse_lazy('MainApp:Inicio')
+
+    def get_success_url(self):
+        return reverse_lazy('MainApp:Inicio')
