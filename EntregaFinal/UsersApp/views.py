@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from UsersApp.forms import FormularioLogin, FormularioRegistro
+from UsersApp.forms import (FormularioEditarPerfil, FormularioLogin,
+                            FormularioRegistro)
 from UsersApp.models import Profile
 
 
@@ -54,3 +55,24 @@ def acercaDeMi(request):
 @login_required
 def informacionPerfil(request):
     return render(request, 'informacion_perfil.html', {})
+
+@login_required
+def editarPerfil(request):
+    usuario = request.user
+    if request.method == 'POST':
+        form = FormularioEditarPerfil(request.POST, request.FILES)
+        if form.is_valid():
+            usuario.username = form.cleaned_data.get('username')
+            usuario.first_name = form.cleaned_data.get('first_name')
+            usuario.last_name = form.cleaned_data.get('last_name')
+            usuario.email = form.cleaned_data.get('email')
+            usuario.set_password(form.cleaned_data.get('password1'))
+            usuario.save()
+            if 'avatar' in request.FILES:
+                profile = usuario.profile
+                profile.avatar = form.cleaned_data['avatar']
+                profile.save()
+            return redirect("UsersApp:InformacionPerfil")
+    else:
+        form = FormularioEditarPerfil(initial={'username': usuario.username, 'first_name': usuario.first_name, 'last_name': usuario.last_name,  'email': usuario.email, })
+    return render(request, 'editar_perfil.html', {"form": form})

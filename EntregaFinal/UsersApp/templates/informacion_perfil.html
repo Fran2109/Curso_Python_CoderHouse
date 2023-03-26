@@ -7,4 +7,5 @@
     <p><strong>Email:</strong> {{ user.email }}</p>
     <p><strong>Nombre:</strong> {{ user.first_name }}</p>
     <p><strong>Apellido:</strong> {{ user.last_name }}</p>
+    <a href="{% url 'UsersApp:EditarPerfil' %}" class="btn btn-primary">Editar!</a>
 {% endblock %}
