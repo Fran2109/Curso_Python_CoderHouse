@@ -26,16 +26,14 @@ def login_request(request):
   
 def registro(request):
     if request.method == 'POST':
+        print(request.POST)
+        print(request.FILES)
         form = FormularioRegistro(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            if 'avatar' in request.FILES:
-                avatar = Profile(user = user, avatar = form.cleaned_data['avatar'])
-                avatar.save()
-            if 'link' in request.POST:
-                user.profile.link = form.cleaned_data['link']
-                user.save()
+            avatar = Profile(user = user, avatar = form.cleaned_data['avatar'], link = form.cleaned_data['link'])
+            avatar.save()
             return redirect("MainApp:Inicio")
     else:
         form = FormularioRegistro()
@@ -70,6 +68,7 @@ def editarPerfil(request):
             usuario.last_name = form.cleaned_data.get('last_name')
             usuario.email = form.cleaned_data.get('email')
             usuario.set_password(form.cleaned_data.get('password1'))
+            usuario.profile.link = form.cleaned_data.get('link')
             usuario.save()
             if 'avatar' in request.FILES:
                 profile = usuario.profile
@@ -77,5 +76,5 @@ def editarPerfil(request):
                 profile.save()
             return redirect("UsersApp:InformacionPerfil")
     else:
-        form = FormularioEditarPerfil(initial={'username': usuario.username, 'first_name': usuario.first_name, 'last_name': usuario.last_name,  'email': usuario.email, })
+        form = FormularioEditarPerfil(initial={'username': usuario.username, 'first_name': usuario.first_name, 'last_name': usuario.last_name,  'email': usuario.email, 'link': usuario.profile.link })
     return render(request, 'editar_perfil.html', {"form": form})
