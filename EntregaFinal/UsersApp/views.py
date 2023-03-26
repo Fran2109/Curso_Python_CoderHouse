@@ -1,29 +1,15 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic.edit import UpdateView
-from django.contrib.auth.views import LoginView
-
+from django.views.generic.edit import FormView, UpdateView
 from UsersApp.forms import (FormularioEditarContrasenia,
                             FormularioEditarPerfil, FormularioLogin,
                             FormularioRegistro)
 from UsersApp.models import Profile
 
-
-def registro(request):
-    if request.method == 'POST':
-        form = FormularioRegistro(request.POST, request.FILES)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            avatar = Profile(user = user, avatar = form.cleaned_data['avatar'], link = form.cleaned_data['link'])
-            avatar.save()
-            return redirect("MainApp:Inicio")
-    else:
-        form = FormularioRegistro()
-    return render(request, 'registro.html', {"form": form})
 
 def acercaDeMi(request):
     context = {
@@ -43,19 +29,43 @@ def acercaDeMi(request):
 def informacionPerfil(request):
     return render(request, 'informacion_perfil.html', {})
 
-class EditarPerfil(UpdateView):
+class Registro(FormView):
+    model = Profile
+    template_name = 'registro.html'
+    form_class = FormularioRegistro
+    redirect_autheticated_user = True
+    success_url = reverse_lazy('MainApp:Inicio')
+    
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+            avatar = Profile(user = user, avatar = form.cleaned_data['avatar'], link = form.cleaned_data['link'])
+            avatar.save()
+        return super(Registro, self).form_valid(form)
+    
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('MainApp:Inicio')
+        return super(Registro, self).get(*args, **kwargs)
+    
+class EditarPerfil(LoginRequiredMixin, UpdateView):
     form_class = FormularioEditarPerfil
     template_name = 'editar_perfil.html'
     success_url = reverse_lazy('UsersApp:InformacionPerfil')
     def get_object(self):
         return self.request.user
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return super(EditarPerfil, self).get(*args, **kwargs)
+        return redirect('UsersApp:Login')
 
 class ModificarContrasenia(PasswordChangeView):
     form_class = FormularioEditarContrasenia
     template_name = 'modificar_contrasenia.html'
     success_url = reverse_lazy('MainApp:Inicio')
     
-class LoginPagina(LoginView):
+class Login(LoginView):
     form_class = FormularioLogin
     template_name = 'login.html'
     fields = '__all__'
