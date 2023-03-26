@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
 from UsersApp.forms import (FormularioEditarContrasenia,
                             FormularioEditarPerfil, FormularioLogin,
                             FormularioRegistro)
@@ -29,8 +30,6 @@ def login_request(request):
   
 def registro(request):
     if request.method == 'POST':
-        print(request.POST)
-        print(request.FILES)
         form = FormularioRegistro(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
@@ -60,27 +59,12 @@ def acercaDeMi(request):
 def informacionPerfil(request):
     return render(request, 'informacion_perfil.html', {})
 
-@login_required
-def editarPerfil(request):
-    usuario = request.user
-    if request.method == 'POST':
-        form = FormularioEditarPerfil(request.POST, request.FILES)
-        if form.is_valid():
-            usuario.username = form.cleaned_data.get('username')
-            usuario.first_name = form.cleaned_data.get('first_name')
-            usuario.last_name = form.cleaned_data.get('last_name')
-            usuario.email = form.cleaned_data.get('email')
-            usuario.set_password(form.cleaned_data.get('password1'))
-            usuario.profile.link = form.cleaned_data.get('link')
-            usuario.save()
-            if 'avatar' in request.FILES:
-                profile = usuario.profile
-                profile.avatar = form.cleaned_data['avatar']
-                profile.save()
-            return redirect("UsersApp:InformacionPerfil")
-    else:
-        form = FormularioEditarPerfil(initial={'username': usuario.username, 'first_name': usuario.first_name, 'last_name': usuario.last_name,  'email': usuario.email, 'link': usuario.profile.link })
-    return render(request, 'editar_perfil.html', {"form": form})
+class EditarPerfil(UpdateView):
+    form_class = FormularioEditarPerfil
+    template_name = 'editar_perfil.html'
+    success_url = reverse_lazy('UsersApp:InformacionPerfil')
+    def get_object(self):
+        return self.request.user
 
 class ModificarContrasenia(PasswordChangeView):
     form_class = FormularioEditarContrasenia
