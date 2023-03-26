@@ -19,11 +19,12 @@ class FormularioRegistro(UserCreationForm):
     email = forms.CharField(label="Email", required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={'class': "form-control"}))
     password2 = forms.CharField(label="Repetir la Contraseña", widget=forms.PasswordInput(attrs={'class': "form-control"}))
+    link = forms.URLField(label="Link", required=False, widget=forms.TextInput(attrs={'class': "form-control"}))
     avatar = forms.ImageField(label="Ingrese su Avatar", required=False)
     
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'avatar']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'link', 'avatar']
         help_texts = {k:"" for k in fields}
         
 class FormularioEditarPerfil(UserCreationForm):
@@ -33,9 +34,10 @@ class FormularioEditarPerfil(UserCreationForm):
     email = forms.CharField(label="Cambiar Email", required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={'class': "form-control"}))
     password2 = forms.CharField(label="Repetir la Contraseña", widget=forms.PasswordInput(attrs={'class': "form-control"}))
+    link = forms.URLField(label="Cambiar Link", required=False, widget=forms.TextInput(attrs={'class': "form-control"}))
     avatar = forms.ImageField(label="Ingrese su Avatar", required=False)
     
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'avatar']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'link', 'avatar']
         help_texts = {k:"" for k in fields}

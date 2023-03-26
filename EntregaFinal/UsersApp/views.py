@@ -33,6 +33,9 @@ def registro(request):
             if 'avatar' in request.FILES:
                 avatar = Profile(user = user, avatar = form.cleaned_data['avatar'])
                 avatar.save()
+            if 'link' in request.POST:
+                user.profile.link = form.cleaned_data['link']
+                user.save()
             return redirect("MainApp:Inicio")
     else:
         form = FormularioRegistro()
