@@ -10,12 +10,17 @@
                         <img class="card-img-top" src="{{ post.fondo.url }}" alt="{{ post.titulo }}">
                     {% endif %}
                     <div class="card-header">
-                        <h5 class="card-title">{{ post.titulo }}</h5>
-                        <p class="card-subtitle">{{ post.fecha_creacion|date }}</p>
+                        <div class="d-flex flex-row">
+                            <div class="d-flex flex-column w-75">
+                                <h5 class="card-title">{{ post.titulo }}</h5>
+                                <p class="card-subtitle">{{ post.fecha_creacion|date }}</p>
+                            </div>
+                            <img src="{{ post.author.avatar.url }}" alt="{{ Avatar }}" class="img-fluid rounded mb-2 mt-2" style="width: 50px; height: 50px;">
+                        </div>
                     </div>
                     <div class="card-body">
                         <p class="card-text">{{ post.contenido|truncatewords:50 }}</p>
-                        <a{% comment %}  href="{% url 'view_post' post.id %}" {% endcomment %} class="btn btn-primary">Read more</a>
+                        <a href="{% url 'PostsApp:PostDetalle' post.id %}" class="btn btn-primary">Leer Mas!</a>
                     </div>
                 </div>
             </div>
