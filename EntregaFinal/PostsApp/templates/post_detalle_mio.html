@@ -2,6 +2,12 @@
 
 {% block content %}
     <div class="row">
+        {% if anterior_post %}
+            <a href="{% url 'PostsApp:PostDetalleMio' anterior_post.id %}" class="btn btn-secondary">&laquo; Anterior</a>
+        {% endif %}
+        {% if posterior_post %}
+            <a href="{% url 'PostsApp:PostDetalleMio' posterior_post.id %}" class="btn btn-secondary ml-auto">Siguiente &raquo;</a>
+        {% endif %}
         <div class="col-md-12">
             <div class="d-flex flex-row">
                 <div class="d-flex flex-column w-75">
