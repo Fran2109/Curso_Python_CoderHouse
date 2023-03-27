@@ -8,4 +8,6 @@ urlpatterns = [
     path('ListaPosts/', ListaPosts.as_view(), name="ListaPosts"),
     path('postDetalleMio/<int:pk>/', PostDetalleMio.as_view(), name="PostDetalleMio"),
     path('postDetalle/<int:pk>/', PostDetalle.as_view(), name="PostDetalle"),
+    path('postBorrado/<int:pk>/', PostBorrado.as_view(), name='PostBorrado'),
+
 ]

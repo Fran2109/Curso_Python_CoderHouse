@@ -90,3 +90,8 @@ LOGOUT_REDIRECT_URL = "MainApp:Inicio"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL= 'UsersApp:Login'
+""" 
+DEBUG = False
+ALLOWED_HOSTS = ['example.com', '127.0.0.1', 'localhost'] 
+"""
+

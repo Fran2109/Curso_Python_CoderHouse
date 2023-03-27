@@ -21,7 +21,11 @@
                         </div>
                         <div class="card-body">
                             <p class="card-text">{{ post.contenido|truncatewords:50 }}</p>
-                            <a href="{% url 'PostsApp:PostDetalleMio' post.id %}" class="btn btn-primary">Leer Mas!</a>
+                            <div class="d-flex flex-column ">
+                                <a href="{% url 'PostsApp:PostDetalleMio' post.id %}" class="btn btn-primary margin" style="margin: 10px 20px;">Leer Mas!</a>
+                                <a {% comment %} href="{% url 'PostsApp:PostBorrado' post.id %}" {% endcomment %} class="btn btn-secondary" style="margin: 10px 20px;">Editar</a>
+                                <a href="{% url 'PostsApp:PostBorrado' post.id %}" class="btn btn-danger" style="margin: 10px 20px;">Eliminar</a>
+                            </div>
                         </div>
                     </div>
                 </div>

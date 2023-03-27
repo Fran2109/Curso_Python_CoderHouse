@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Borrado Post{% endblock %}
+{% block content %}
+<form method="post">{% csrf_token %}
+    <h4>Estás seguro(a) que deseas borrar el post {{post.titulo}} ?</h4>
+    <p>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a  class="btn btn-secondary" href="{% url 'PostsApp:ListaMisPosts' %}">Cancelar</a>
+    </p>
+</form>
+{% endblock %}
