@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Mis Posts{% endblock %}
+{% block title %}Todos los Posts{% endblock %}
 {% block content %}
-    <h1>Posts de {{user.username}}</h1>
+    <h1>Todos los Posts</h1>
     <div class="row">
         {% if posts %}
             {% for post in posts %}
@@ -21,13 +21,13 @@
                         </div>
                         <div class="card-body">
                             <p class="card-text">{{ post.contenido|truncatewords:50 }}</p>
-                            <a href="{% url 'PostsApp:PostDetalleMio' post.id %}" class="btn btn-primary">Leer Mas!</a>
+                            <a {% comment %} href="{% url 'PostsApp:PostDetalleMio' post.id %}" {% endcomment %} class="btn btn-primary">Leer Mas!</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <h3>Aun no ha generado ningun post</h3>
+            <h3>Aun no hay generado ningun post</h3>
         {% endif %}
     </div>
 {% endblock %}

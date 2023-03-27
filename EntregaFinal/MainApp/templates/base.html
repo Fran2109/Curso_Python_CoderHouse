@@ -117,6 +117,9 @@
 						<a class="nav-link" href="{% url 'PostsApp:ListaMisPosts' %}">Mis Posts</a>
 					</li>
 				{% endif %}
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'PostsApp:ListaPosts' %}">Todos los Posts</a>
+				</li>
 			</ul>
             <ul class="navbar-nav ml-auto">
 				{% if request.user.is_authenticated %}
