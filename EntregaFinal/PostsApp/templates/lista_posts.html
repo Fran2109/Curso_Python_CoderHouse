@@ -21,7 +21,7 @@
                         </div>
                         <div class="card-body">
                             <p class="card-text">{{ post.contenido|truncatewords:50 }}</p>
-                            <a {% comment %} href="{% url 'PostsApp:PostDetalleMio' post.id %}" {% endcomment %} class="btn btn-primary">Leer Mas!</a>
+                            <a href="{% url 'PostsApp:PostDetalle' post.id %}" class="btn btn-primary">Leer Mas!</a>
                         </div>
                     </div>
                 </div>

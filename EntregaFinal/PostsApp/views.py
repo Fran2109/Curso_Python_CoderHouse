@@ -40,3 +40,23 @@ class ListaPosts(ListView):
     
     def get_queryset(self):
         return Post.objects.order_by('-fecha_creacion', "titulo")
+
+class PostDetalle(DetailView):
+    model = Post
+    template_name = 'post_detalle.html'
+    
+    def get_context_data(self, *args, **kwargs):
+        posts = Post.objects.order_by('-fecha_creacion', "titulo")
+        post = get_object_or_404(Post, id=self.kwargs['pk'])
+        post_index = list(posts).index(post)
+        anterior_post = None
+        posterior_post = None
+        if post_index > 0:
+            anterior_post = posts[post_index - 1]
+        if post_index < len(posts) - 1:
+            posterior_post = posts[post_index + 1]
+        context = super().get_context_data(*args, **kwargs)
+        context['post'] = post
+        context['anterior_post'] = anterior_post
+        context['posterior_post'] = posterior_post
+        return context
