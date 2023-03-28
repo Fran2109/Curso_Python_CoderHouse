@@ -26,15 +26,16 @@
                             <p class="card-text">{{ post.contenido|truncatewords:50 }}</p>
                             <div class="d-flex flex-column ">
                                 <a href="{% url 'PostsApp:PostDetalleMio' post.id %}" class="btn btn-primary margin" style="margin: 10px 20px;">Leer Mas!</a>
-                                <a {% comment %} href="{% url 'PostsApp:PostBorrado' post.id %}" {% endcomment %} class="btn btn-secondary" style="margin: 10px 20px;">Editar</a>
+                                <a href="{% url 'PostsApp:PostEdicion' post.id %}" class="btn btn-secondary" style="margin: 10px 20px;">Editar</a>
                                 <a href="{% url 'PostsApp:PostBorrado' post.id %}" class="btn btn-danger" style="margin: 10px 20px;">Eliminar</a>
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
-        {% else %}
-            <h3>Aun no ha generado ningun post</h3>
+        {% else %}            
+            <h2>Aun no hay generado ningun post</h2>
+            <h4>Haz click en Nuevo Post para crear el primero</h4>
         {% endif %}
     </div>
 {% endblock %}

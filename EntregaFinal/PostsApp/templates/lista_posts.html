@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}Todos los Posts{% endblock %}
 {% block content %}
-    <h1>Todos los Posts</h1>
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <h1>Todos los Posts</h1>
+        <a href="{% url 'PostsApp:PostCreacion' %}" class="btn btn-primary">Nuevo Post</a>
+    </div>
     <div class="row">
         {% if posts %}
             {% for post in posts %}
@@ -27,7 +30,8 @@
                 </div>
             {% endfor %}
         {% else %}
-            <h3>Aun no hay generado ningun post</h3>
+            <h2>Aun no hay generado ningun post</h2>
+            <h4>Haz click en Nuevo Post para crear el primero</h4>
         {% endif %}
     </div>
 {% endblock %}

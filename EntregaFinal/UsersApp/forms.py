@@ -49,7 +49,7 @@ class FormularioEditarPerfil(UserChangeForm):
             if("avatar" in self.cleaned_data and self.cleaned_data["avatar"] is not None):
                 user.profile.avatar = self.cleaned_data["avatar"]
                 user.profile.save()
-            if("link" in self.cleaned_data and self.cleaned_data["link"] is not ""):
+            if("link" in self.cleaned_data and self.cleaned_data["link"] != ""):
                 user.profile.link = self.cleaned_data["link"]
                 user.profile.save()
         return user

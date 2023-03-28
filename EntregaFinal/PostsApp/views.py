@@ -2,18 +2,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, UpdateView
 from django.views.generic.edit import DeleteView, FormView
-from PostsApp.forms import FormularioNuevoPost
+from PostsApp.forms import *
 from PostsApp.models import Post
 from UsersApp.models import Profile
 
 
-class UserCanDeleteMixin(LoginRequiredMixin):
+class UserCanDeleteOrUpdateMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.author.user != request.user:
-            raise PermissionDenied("No tienes permiso para eliminar este post.")
+            raise PermissionDenied("No tienes permiso para manipular este post.")
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -75,7 +75,7 @@ class PostDetalle(DetailView):
         context['posterior_post'] = posterior_post
         return context
     
-class PostBorrado(UserCanDeleteMixin, DeleteView):
+class PostBorrado(UserCanDeleteOrUpdateMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('PostsApp:ListaMisPosts')
     context_object_name = 'post'
@@ -92,3 +92,35 @@ class PostCreacion(LoginRequiredMixin, FormView):
         form.instance.author = perfil
         form.save()
         return super().form_valid(form)
+
+class PostCreacion(LoginRequiredMixin, FormView):
+    model = Post
+    form_class = FormularioNuevoPost
+    success_url = reverse_lazy('PostsApp:ListaMisPosts')
+    template_name = 'post_creacion.html'
+    
+    def form_valid(self, form):
+        perfil = Profile.objects.filter(user=self.request.user)[0]
+        form.instance.author = perfil
+        form.save()
+        return super().form_valid(form)
+
+class PostEdicion(UserCanDeleteOrUpdateMixin, UpdateView):
+    model = Post
+    form_class = FormularioEdicionPost
+    success_url = reverse_lazy('PostsApp:ListaMisPosts')
+    template_name = 'post_edicion.html'
+    
+"""     def form_valid(self, form):
+        perfil = Profile.objects.filter(user=self.request.user)[0]
+        form.instance.author = perfil
+        form.save()
+        return super().form_valid(form) """
+""" 
+class GuitarraUpdate(LoginRequiredMixin, UpdateView):
+    model = Instrumento
+    form_class = ActualizacionInstrumento
+    success_url = reverse_lazy('guitarras')
+    context_object_name = 'guitarra'
+    template_name = 'Base/guitarraEdicion.html'
+"""
