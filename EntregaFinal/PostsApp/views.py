@@ -1,15 +1,17 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, render
-from django.views.generic import DetailView, ListView
-from PostsApp.models import Post
 from django.core.exceptions import PermissionDenied
-from django.views.generic.edit import DeleteView 
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import DeleteView, FormView
+from PostsApp.forms import FormularioNuevoPost
+from PostsApp.models import Post
+from UsersApp.models import Profile
+
 
 class UserCanDeleteMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
-        print(obj.author.user)
         if obj.author.user != request.user:
             raise PermissionDenied("No tienes permiso para eliminar este post.")
         return super().dispatch(request, *args, **kwargs)
@@ -79,15 +81,14 @@ class PostBorrado(UserCanDeleteMixin, DeleteView):
     context_object_name = 'post'
     template_name = 'post_borrado.html'
     
+class PostCreacion(LoginRequiredMixin, FormView):
+    model = Post
+    form_class = FormularioNuevoPost
+    success_url = reverse_lazy('PostsApp:ListaMisPosts')
+    template_name = 'post_creacion.html'
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    def form_valid(self, form):
+        perfil = Profile.objects.filter(user=self.request.user)[0]
+        form.instance.author = perfil
+        form.save()
+        return super().form_valid(form)

@@ -54,7 +54,6 @@ class FormularioEditarPerfil(UserChangeForm):
                 user.profile.save()
         return user
     
-    
 class FormularioEditarContrasenia(PasswordChangeForm):
     old_password = forms.CharField(label=("Contraseña Actual"), widget=forms.PasswordInput(attrs={'class':'form-control'}))
     new_password1 = forms.CharField(label=("Nueva Contraseña"), widget=forms.PasswordInput(attrs={'class':'form-control'}))
