@@ -21,11 +21,9 @@
           </div>
         </div>
         <div class="card-footer chat-footer">
-          <form method="post">
+          <form method="post" action="">
             {% csrf_token %}
-            <div class="form-group">
-              <textarea class="form-control" name="message" placeholder="Escriba un mensaje..."></textarea>
-            </div>
+            {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Enviar</button>
           </form>
         </div>
