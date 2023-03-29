@@ -96,6 +96,9 @@
 		.btn-primary:hover {
 			background-color: #0069d9;
 		}
+
+		{% block styles %}
+		{% endblock %}
 	</style>
 </head>
 <body>
@@ -120,6 +123,11 @@
 				<li class="nav-item">
 					<a class="nav-link" href="{% url 'PostsApp:ListaPosts' %}">Todos los Posts</a>
 				</li>
+				{% if request.user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'MessagesApp:ListaMensajes' %}">Mensajes</a>
+					</li>
+				{% endif %}
 			</ul>
             <ul class="navbar-nav ml-auto">
 				{% if request.user.is_authenticated %}

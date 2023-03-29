@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}Mensajes{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card bg-dark text-white">
+        <div class="card-body chat-body">
+          <div class="chat-messages">
+            {% for mensaje in mensajes %}
+              <div class="message {% if mensaje.author.user == request.user %}right{% else %}left{% endif %} {% if mensaje.author.user == request.user %}user-message{% endif %}">
+                <img src="{{ mensaje.author.avatar.url }}" class="avatar {% if mensaje.author.user == request.user %}ml-auto{% endif %}" alt="{{ mensaje.author.user.username }}">
+                <div class="message-text">
+                  <span class="message-username">{{ mensaje.author.user.username }}</span>
+                  {{ mensaje.contenido }}
+                </div>
+                <span class="message-time">{{ mensaje.fecha_creacion|date:'Y-m-d H:i:s' }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="card-footer chat-footer">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea class="form-control" name="message" placeholder="Escriba un mensaje..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+  .chat-body {
+    height: 300px;
+    overflow-y: scroll;
+  }
+
+  .chat-messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    align-items: {% if message.user == request.user %}flex-end{% else %}flex-start{% endif %};
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .user-message .avatar {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .message-text {
+    padding: 10px;
+    border-radius: 20px;
+    max-width: 80%;
+  }
+
+  .right .message-text {
+    background-color: #007bff;
+    color: #fff;
+    margin-left: auto;
+  }
+
+  .left .message-text {
+    background-color: #eee;
+    color: #000;
+  }
+
+  .message-username {
+    font-size: 12px;
+    color: #888;
+    margin-right: 5px;
+  }
+
+  .message-time {
+    font-size: 12px;
+    color: #888;
+    margin-left: 10px;
+  }
+
+  .user-message .message-time {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+
+  .right .message-username {
+    margin-right: 0;
+    margin-left: auto;
+  }
+
+  .chat-footer {
+    padding: 20px;
+    background-color: #222;
+  }
+
+{% endblock %}

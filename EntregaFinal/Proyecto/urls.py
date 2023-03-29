@@ -11,7 +11,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('MainApp.urls')),
     path('UsersApp/', include('UsersApp.urls')),
-    path('PostsApp/', include('PostsApp.urls'))
+    path('PostsApp/', include('PostsApp.urls')),
+    path('MessagesApp/', include('MessagesApp.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

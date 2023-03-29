@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'MainApp',
     'UsersApp',
     'PostsApp',
+    'MessagesApp',
 ]
 
 MIDDLEWARE = [
@@ -31,7 +32,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'EntregaFinal.urls'
+ROOT_URLCONF = 'Proyecto.urls'
 
 TEMPLATES = [
     {
@@ -49,7 +50,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'EntregaFinal.wsgi.application'
+WSGI_APPLICATION = 'Proyecto.wsgi.application'
 
 DATABASES = {
     'default': {

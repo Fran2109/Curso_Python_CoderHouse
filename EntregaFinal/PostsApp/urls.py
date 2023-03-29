@@ -11,6 +11,4 @@ urlpatterns = [
     path('postBorrado/<int:pk>/', PostBorrado.as_view(), name='PostBorrado'),
     path('postCreacion/', PostCreacion.as_view(), name="PostCreacion"),
     path('postEdicion/<int:pk>', PostEdicion.as_view(), name="PostEdicion")
-
-
 ]
