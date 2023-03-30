@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Importo la clase PermissionDenied para negar el permiso de un usuario si no tiene permiso para realizar una acción.
 from django.core.exceptions import PermissionDenied
 # Importo la función get_object_or_404 para obtener un objeto de una clase específica o, si no existe, generar un error 404.
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 # Importo la función reverse_lazy para generar una URL de vista inversa que se resuelve cuando la vista se llama por primera vez en lugar de en la importación.
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, UpdateView
@@ -110,3 +110,12 @@ class PostEdicion(UserCanDeleteOrUpdateMixin, UpdateView):
     form_class = FormularioEdicionPost
     success_url = reverse_lazy('PostsApp:ListaMisPosts')
     template_name = 'post_edicion.html'
+    
+# Defino la vista BusquedaPosts, que permite al usuario buscar posts por el titulo.
+def busquedaPosts(request):
+    query = request.GET.get('q')
+    if query:
+        posts = Post.objects.filter(titulo__icontains=query)
+    else:
+        posts = Post.objects.all()
+    return render(request, 'busqueda_posts.html', {'posts': posts})

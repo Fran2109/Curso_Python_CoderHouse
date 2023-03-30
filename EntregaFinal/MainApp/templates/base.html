@@ -3,7 +3,7 @@
 <head>
 	<title>{% block title %}{% endblock %}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Enlazamos los archivos CSS de Bootstrap -->
+	{% comment %} Enlazamos los archivos CSS de Bootstrap {% endcomment %}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 	<style>
 		body {
@@ -125,6 +125,11 @@
 				</li>
 				{% if request.user.is_authenticated %}
 					<li class="nav-item">
+						<a class="nav-link" href="{% url 'PostsApp:BusquedaPosts' %}">Buscar</a>
+					</li>
+				{% endif %}
+				{% if request.user.is_authenticated %}
+					<li class="nav-item">
 						<a class="nav-link" href="{% url 'MessagesApp:ListaMensajes' %}">Mensajes</a>
 					</li>
 				{% endif %}
@@ -180,7 +185,9 @@
 			</div>
         </div>
     </footer>
-	
+	{% block javascript %}
+
+	{% endblock %}
 	<!-- Enlazamos los archivos JavaScript de Bootstrap -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
