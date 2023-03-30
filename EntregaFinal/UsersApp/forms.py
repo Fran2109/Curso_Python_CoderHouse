@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        UserChangeForm, UserCreationForm)
 from django.contrib.auth.models import User
-from UsersApp.models import Profile
 
 
 class FormularioLogin(AuthenticationForm):
