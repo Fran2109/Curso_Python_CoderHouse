@@ -15,6 +15,7 @@ from PostsApp.models import Post
 # Importo el modelo Profile para manejar los usuarios
 from UsersApp.models import Profile
 
+
 # Defino a clase UserCanDeleteOrUpdateMixin para asegurarme de que solo el usuario que creó una publicación pueda editarla o eliminarla.
 class UserCanDeleteOrUpdateMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
