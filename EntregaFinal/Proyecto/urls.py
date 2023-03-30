@@ -18,5 +18,6 @@ urlpatterns = [
     path('MessagesApp/', include('MessagesApp.urls')),
 ]
 
-# Utilizo la función += para agregar la URL estática del archivo multimedia a urlpatterns, que sirve para proporcionar acceso público a los archivos de medios cargados en la aplicación. Esto se hace a través de la variable MEDIA_URL y MEDIA_ROOT que se especifican en el archivo settings.py de la aplicación Django.
+# Utilizo la función += para agregar la URL estática del archivo multimedia a urlpatterns, que sirve para proporcionar acceso público a los archivos de medios cargados en la aplicación.
+# Esto se hace a través de la variable MEDIA_URL y MEDIA_ROOT que se especifican en el archivo settings.py de la aplicación Django.
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

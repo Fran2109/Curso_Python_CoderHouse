@@ -1,16 +1,13 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import FormView
-from UsersApp.models import Profile
-
 from MessagesApp.forms import FormularioMensajeNuevo
 from MessagesApp.models import Mensaje
+from UsersApp.models import Profile
 
 
-# ListaMensajes hereda de ListView y FormView, así como de LoginRequiredMixin. 
+# ListaMensajes hereda de ListView y FormView, así como de LoginRequiredMixin.
 class ListaMensajes(ListView, LoginRequiredMixin, FormView):
     # Defino varias propiedades, como el modelo a usar (Mensaje), la clase de formulario a usar (FormularioMensajeNuevo), el nombre del objeto de contexto (mensajes), la URL a la que se redirige después de enviar el formulario (success_url) y la plantilla a usar (lista_mensajes.html).
     model = Mensaje
