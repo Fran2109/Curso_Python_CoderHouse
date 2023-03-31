@@ -6,19 +6,17 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card bg-dark text-white">
-        <div class="card-body chat-body">
-          <div class="chat-messages">
-            {% for mensaje in mensajes %}
-              <div class="message {% if mensaje.author.user == request.user %}right{% else %}left{% endif %} {% if mensaje.author.user == request.user %}user-message{% endif %}">
-                <img src="{{ mensaje.author.avatar.url }}" class="avatar {% if mensaje.author.user == request.user %}ml-auto{% endif %}" alt="{{ mensaje.author.user.username }}">
-                <div class="message-text">
-                  <span class="message-username">{{ mensaje.author.user.username }}</span>
-                  {{ mensaje.contenido }}
-                </div>
-                <span class="message-time">{{ mensaje.fecha_creacion|date:'Y-m-d H:i:s' }}</span>
+        <div class="card-body chat-body chat-messages" id="chat-messages-container">
+          {% for mensaje in mensajes %}
+            <div class="message {% if mensaje.author.user == request.user %}right{% else %}left{% endif %} {% if mensaje.author.user == request.user %}user-message{% endif %}">
+              <img src="{{ mensaje.author.avatar.url }}" class="avatar {% if mensaje.author.user == request.user %}ml-auto{% endif %}" alt="{{ mensaje.author.user.username }}">
+              <div class="message-text">
+                <span class="message-username">{{ mensaje.author.user.username }}</span>
+                {{ mensaje.contenido }}
               </div>
-            {% endfor %}
-          </div>
+              <span class="message-time">{{ mensaje.fecha_creacion|date:'Y-m-d H:i:s' }}</span>
+            </div>
+          {% endfor %}
         </div>
         <div class="card-footer chat-footer">
           <form method="post" action="">
@@ -108,4 +106,13 @@
     background-color: #222;
   }
 
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    $(document).ready(function() {
+      var chatContainer = document.getElementById("chat-messages-container");
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    });
+  </script>
 {% endblock %}

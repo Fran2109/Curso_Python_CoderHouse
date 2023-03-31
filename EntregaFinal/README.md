@@ -11,7 +11,7 @@
 * [x] Se deberá de manera individual. Crearás una aplicación web estilo blog programada en Python en Django. Esta web tendrá admin, perfiles, registró, páginas y formularios.
 * [x] La entrega se realizará enviando el link a GitHub.
 * [ ] En el github debe haber un video o link a vídeo donde nos muestran su web funcionando en no más de diez minutos. 
-* [ ] Dentro del Github deberá existir una carpeta con por lo menos 3 casos de pruebas debidamente documentados.
+* [x] Dentro del Github deberá existir una carpeta con por lo menos 3 casos de pruebas debidamente documentados.
 * [x] Contar con algún acceso visible a la vista de "Acerca de mí" donde se contará acerca de los dueños de la página manejado en el route about/. (En castellano un “acerca de mí” que hable un poco de los creadores de la web y del proyecto).
 * [x] Contar con algún acceso visible a la vista de blogs que debe alojarse en el route pages/. (Es decir un html que permite listar todos los blogs de la BD, con una información mínima de dicho blog).
 * [x] Acceder a una pantalla que contendrá las páginas. Al clickear en “Leer más” debe navegar al detalle de la page mediante un route pages/<pageId>. (O sea al hacer click se ve más detalle de lo que se veía en el apartado anterior).
