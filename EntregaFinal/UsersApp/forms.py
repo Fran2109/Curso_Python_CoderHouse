@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        UserChangeForm, UserCreationForm)
 from django.contrib.auth.models import User
+from UsersApp.models import Profile
 
 
 # Defino una clase llamada FormularioLogin que hereda de AuthenticationForm, que es un formulario de autenticación de usuario en Django.
@@ -60,10 +61,16 @@ class FormularioEditarPerfil(UserChangeForm):
         if commit:
             user.save()
             if("avatar" in self.cleaned_data and self.cleaned_data["avatar"] is not None):
-                user.profile.avatar = self.cleaned_data["avatar"]
+                if(hasattr(user, 'profile')):
+                    user.profile.avatar = self.cleaned_data["avatar"]
+                else:
+                    user.profile = Profile(user=user, avatar=self.cleaned_data["avatar"])
                 user.profile.save()
             if("link" in self.cleaned_data and self.cleaned_data["link"] != ""):
-                user.profile.link = self.cleaned_data["link"]
+                if(hasattr(user, 'profile')):
+                    user.profile.link = self.cleaned_data["link"]
+                else:
+                    user.profile = Profile(user=user, avatar=self.cleaned_data["link"])
                 user.profile.save()
         return user
 
