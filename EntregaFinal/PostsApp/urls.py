@@ -20,5 +20,6 @@ urlpatterns = [
     path('postCreacion/', PostCreacion.as_view(), name="PostCreacion"),
     # 'postEdicion/int:pk' llama a la vista 'PostEdicion' y se le asigna el nombre 'PostEdicion', donde int:pk es un parámetro que indica que se espera un número entero que se utilizará como identificador de un post.
     path('postEdicion/<int:pk>', PostEdicion.as_view(), name="PostEdicion"),
+    # 'postBusqueda' llama a la vista 'busquedaPosts' y se le asigna el nombre 'BusquedaPosts'.
     path('postBusqueda', busquedaPosts, name="BusquedaPosts")
 ]

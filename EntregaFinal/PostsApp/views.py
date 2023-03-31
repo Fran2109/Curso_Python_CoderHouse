@@ -116,7 +116,7 @@ class PostEdicion(UserCanDeleteOrUpdateMixin, UpdateView):
 def busquedaPosts(request):
     query = request.GET.get('q')
     if query:
-        posts = Post.objects.filter(titulo__icontains=query)
+        posts = Post.objects.filter(titulo__icontains=query).order_by('-fecha_creacion', "titulo")
     else:
-        posts = Post.objects.all()
+        posts = Post.objects.all().order_by('-fecha_creacion', "titulo")
     return render(request, 'busqueda_posts.html', {'posts': posts, 'query': query})
