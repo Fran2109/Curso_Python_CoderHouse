@@ -2,10 +2,19 @@
 {% block title %}Busqueda{% endblock %}
 {% block content %}
     <h1>Busqueda</h1>
-    <form method="get">
-        <input type="text" name="q" placeholder="Search">
-        <button type="submit">Buscar</button>
+    <form method="get" class="bg-dark text-white mb-3">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q" placeholder="Buscar" onkeyup="toggleButton()">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" id="search-btn" disabled>
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
     </form>
+
     <div class="row">
         {% if posts %}
             {% for post in posts %}
@@ -31,23 +40,22 @@
                 </div>
             {% endfor %}
         {% else %}
-            <h2>Aun no hay generado ningun post</h2>
-            <h4>Haz click en Nuevo Post para crear el primero</h4>
+            <h2>No se ha encontrado ningun post con el titulo que contenga "{{query}}".</h2>
+            <h4>Prueba otra busqueda y tendras mejor suerte</h4>
         {% endif %}
     </div>
 {% endblock %}
 
 {% block javascript %}
     <script>
-        const searchInput = document.querySelector('input[name="q"]');
-        const searchBtn = document.querySelector('#search-btn');
-
-        searchInput.addEventListener('input', () => {
-            if (searchInput.value.length > 0) {
-                searchBtn.disabled = false;
+        function toggleButton() {
+            const input = document.querySelector('input[name=q]');
+            const button = document.querySelector('#search-btn');
+            if (input.value === '') {
+                button.disabled = true;
             } else {
-                searchBtn.disabled = true;
+                button.disabled = false;
             }
-        });
+        }
     </script>
 {% endblock %}

@@ -119,4 +119,4 @@ def busquedaPosts(request):
         posts = Post.objects.filter(titulo__icontains=query)
     else:
         posts = Post.objects.all()
-    return render(request, 'busqueda_posts.html', {'posts': posts})
+    return render(request, 'busqueda_posts.html', {'posts': posts, 'query': query})
